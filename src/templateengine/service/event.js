@@ -1,79 +1,81 @@
+var events1;
+var eventCollection1;
 (function (angular, _) {
-  "use strict";
+    "use strict";
 
-  angular
-    .module("Cerberus.TemplateEngine")
-    .service("Cerberus.TemplateEngine.Service.Event", ["$rootScope", EventService]);
+    angular
+            .module("Cerberus.TemplateEngine")
+            .service("Cerberus.TemplateEngine.Service.Event", ["$rootScope", EventService]);
 
-  function EventService($rootScope) {
-    var events = {};
-    var isProcessingEvents = false;
+    function EventService($rootScope) {
+        var events = {};
+        events1 = events;
+        var isProcessingEvents = false;
 
-    this.hasEventsOfType = function (eventType) {
-      return events[eventType] !== undefined;
-    },
+        this.hasEventsOfType = function (eventType) {
+            return events[eventType] !== undefined;
+        },
+                this.subscribe = function (eventType, callback, context) {
+                    // Ensure we are working with collections only
+                    var eventTypes = _.isArray(eventType) ? eventType : [eventType];
+                    var eventCollection;
+                    eventCollection1 = eventCollection;
+                    _.forEach(eventTypes, function (e) {
+                        eventCollection = events[e] || (events[e] = []);
 
-    this.subscribe = function (eventType, callback, context) {
-      // Ensure we are working with collections only
-      var eventTypes = _.isArray(eventType) ? eventType : [eventType];
-      var eventCollection;
+                        if (context) {
+                            callback = callback.bind(context);
+                        }
 
-      _.forEach(eventTypes, function (e) {
-        eventCollection = events[e] || (events[e] = []);
+                        eventCollection.push(callback);
+                    });
+                };
 
-        if (context) {
-          callback = callback.bind(context);
-        }
+        this.unsubscribe = function (eventType, callback) {
+            var eventCollection = events[eventType];
+            if (!eventCollection) {
+                return;
+            }
 
-        eventCollection.push(callback);
-      });
-    };
+            _.remove(eventCollection, function (c) {
+                return c === callback;
+            });
 
-    this.unsubscribe = function (eventType, callback) {
-      var eventCollection = events[eventType];
-      if (!eventCollection) {
-        return;
-      }
+            if (!eventCollection.length) {
+                delete events[eventType];
+            }
+        };
 
-      _.remove(eventCollection, function (c) {
-        return c === callback;
-      });
+        this.unsubscribeAll = function (eventType) {
+            delete events[eventType];
+        };
 
-      if (!eventCollection.length) {
-        delete events[eventType];
-      }
-    };
+        this.notify = function (eventType, data, source) {
+            var doDigest = false;
+            if (!isProcessingEvents) {
+                isProcessingEvents = true;
+                doDigest = true;
+            }
 
-    this.unsubscribeAll = function (eventType) {
-      delete events[eventType];
-    };
+            var eventCollection = events[eventType];
 
-    this.notify = function (eventType, data, source) {
-      var doDigest = false;
-      if (!isProcessingEvents) {
-        isProcessingEvents = true;
-        doDigest = true;
-      }
+            _.forEach(eventCollection, function (callback) {
+                if (callback) {
+                    callback(data, source);
+                }
+            });
 
-      var eventCollection = events[eventType];
+            if (doDigest) {
+                // TODO: This needs optimization, digest from the rootScope is wasteful of resources
+                setTimeout(function () {
+                    isProcessingEvents = false;
+                    $rootScope.$digest();
+                });
+            }
+        };
 
-      _.forEach(eventCollection, function (callback) {
-        if (callback) {
-          callback(data, source);
-        }
-      });
-
-      if (doDigest) {
-        // TODO: This needs optimization, digest from the rootScope is wasteful of resources
-        setTimeout(function () {
-          isProcessingEvents = false;
-          $rootScope.$digest();
-        });
-      }
-    };
-
-    this.clear = function () {
-      events = {};
-    };
-  }
+        this.clear = function () {
+            events = {};
+        };
+    }
 })(window.angular, window._);

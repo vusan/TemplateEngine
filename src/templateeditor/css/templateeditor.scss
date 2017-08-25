@@ -74,6 +74,7 @@ cs-template {
   max-width: 1024px;
   min-height: 600px;
   box-shadow: 0 0 20px 1px #333;
+  transition: ease-out all 1s;
 }
 
 .show-hidden-elements cs-component[style*="display"] {

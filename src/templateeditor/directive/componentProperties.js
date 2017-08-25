@@ -48,7 +48,9 @@
     CSSHelper) {
     var componentVisibilityHasChanged = false;
     var ignoreComponentUpdatedEvent = false;
-
+$scope.showPanel=function(panel) {
+    $scope.panel=panel;
+}
     _.assign($scope, {
       borderStyles: StyleSettingService.getBorderStyles(),
       backgroundImageRepeatOptions: StyleSettingService.getBackgroundImageRepeatOptions(),

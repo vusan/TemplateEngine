@@ -1,0 +1,13 @@
+
+<div class="switch-container">
+    <ul class="nested_with_switc" style="list-style-type: none">
+        <li style="list-style-type: none"   ng-repeat="component in template.components track by component.id"><div class="show" ng-click="showHide(component)">show/hide</div><div>{{component.name}}{{component.hidden}}</div>
+            <ul>
+
+                <li   ng-repeat="comp in component.components track by comp.id"  ng-if="comp.parentId == component.id"><div class="show" ng-click="showHide(comp)">show/hide</div><div>{{comp.name}}{{comp.hidden}}</div></li>
+            </ul>
+        </li>
+
+    </ul>
+
+</div>

@@ -1,55 +1,148 @@
-﻿cs-component {
-  cursor: default;
-  outline: solid 1px transparent;
+cs-component.grid {
+    min-height:50px;
+    width:300px;
+    xdisplay:table;
+}
+cs-sub-component {
+    > * {
+        pointer-events: none;
+    }
+    display:table;
+}
+cs-component.ui-draggable-dragging {
+    transition: none;
+}
+cs-component {
+    transition: all 1s;
+}
+cs-component.c-show,cs-sub-component.c-show {
+    opacity:1;
+}
+cs-component.c-hidden,cs-sub-component.c-hidden {
+    opacity:0;
+    transition: opacity 1s;
+    z-index:0 !important;
+}
+cs-component,cs-sub-component {
+    cursor: default;
+    outline: solid 1px transparent;
+    position:absolute;
 
-  > * {
-    pointer-events: none;
-  }
+    > * {
+        xpointer-events: none;
+    }
 
-  // TODO: Outline when hovering a component
-  // &:hover {
-  //   outline: solid 1px #bdbdbd;
-  // }
+    // TODO: Outline when hovering a component
+    &:hover {
+        outline: 1px dotted #b3b3b3;
+    }
 
-  &:hover::before,
-  &.ui-resizable-resizing::before {
-    background-color: #eaeaea;
-    border: 1px solid rgba(213, 213, 213, 1);
-    border-bottom: none;
-    border-radius: 0 4px 0 0;
-    bottom: 100%;
-    color: black;
-    content: attr(friendly-name) " - " attr(component-name);
-    display: block;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: normal;
-    left: 0;
-    letter-spacing: normal;
-    padding: 2px;
-    position: absolute;
-    z-index: $layer-2;
-    text-shadow: none;
-  }
+    .ui-resizable-nw, .ui-resizable-ne, .ui-resizable-sw, .ui-resizable-se, .ui-resizable-n,.ui-resizable-e,.ui-resizable-s,.ui-resizable-w {
+        width: 10px;
+        height: 10px;
+        background-color: #00A8FF;
+        xborder: 1px solid #000000;
+    }
+    .ui-resizable-nw {
+        left: -15px;
+        top: -15px;
+    }
+    .ui-resizable-ne{
+        top: -15px;
+        right: -15px;
+    }
+    .ui-resizable-sw{
+        bottom: -15px;
+        left: -15px;
+    }
+    .ui-resizable-se{
+        bottom: -15px;
+        right:-15px;
+    }
+    .ui-resizable-n{
+        top: -15px;
+        left:50%;
+    }
+    .ui-resizable-s{
+        bottom: -15px;
+        left: 50%;
+    }
+    .ui-resizable-w{
+        left:-15px;
+        top:50%;
+    }
+    .ui-resizable-e{
+        right:-15px;
+        top:50%;
+    }
+    &:hover::before,
+        &.ui-resizable-resizing::before {
+        background-color: #eaeaea;
+        border: 1px solid rgba(213, 213, 213, 1);
+        border-bottom: none;
+        border-radius: 0 4px 0 0;
+        bottom: 100%;
+        color: black;
+        content: attr(friendly-name) " - " attr(component-name);
+        display: block;
+        font-family: Arial;
+        font-size: 12px;
+        font-weight: normal;
+        left: 0;
+        letter-spacing: normal;
+        padding: 2px;
+        position: absolute;
+        z-index: $layer-2;
+        text-shadow: none;
+    }
 
-  &.hidden {
-    display: table;
-    opacity: 0.1;
-  }
+    &.hidden {
+        display: table;
+        opacity: 0.1;
+    }
 
-  &.selected {
-    -webkit-border-radius: initial; // Special case for webkit
-    border-radius: inherit;
-    outline: solid 1px #3F607F;
-  }
+    &.selected {
+        -webkit-border-radius: initial; // Special case for webkit
+        border-radius: inherit;
+        outline: 1px dotted #b3b3b3;
+        outline-offset: 10px;
+    }
 
-  // Fallback for components with no customized name
-  &[friendly-name=""]:hover::before,
-  &[friendly-name=""].ui-resizable-resizing::before {
-    content: attr(component-name);
-  }
+    // Fallback for components with no customized name
+    &[friendly-name=""]:hover::before,
+        &[friendly-name=""].ui-resizable-resizing::before {
+        content: attr(component-name);
+    }
 
-  &[style*="overflow"] {
-    display: block;
-  }
+    &[style*="overflow"] {
+        display: block;
+    } 
+}
+
+cs-component.highlight {
+    outline:1px dashed #292 !important;
+}
+
+cs-component.ui-draggable-dragging {
+    position:absolute;
+}
+.objectx, .sub-objectx{
+    display:none;
+    //background:#fff;
+    width:0px;
+    height:100%;
+    position:absolute;
+    top:0px;
+    left:10px;
+    border-left: 1px solid #afafff;
+}
+.objecty, .sub-objecty{
+    display:none;
+    //background:#fff;
+    width:100%;
+    height:0px;
+    position:absolute;
+    top:10px;
+    left:0px;
+    border-bottom: 1px solid #afafff;
 }

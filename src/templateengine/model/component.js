@@ -12,9 +12,9 @@
       this.componentType = "";    // Determines which plugin to use
       this.category = "basic";    // The category that best fits the component
       this.creationGUID = "";     // Used internally by template editor
-
+      this.ccc=[];
       this.class = "";            // User defined class
 
-      this.content = {};
+      this.content = {text:'Text'};
     });
 })(window.angular);

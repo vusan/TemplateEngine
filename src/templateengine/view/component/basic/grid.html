@@ -1,0 +1,10 @@
+<div style="position:relative" class="relat">
+    <!--    <div style="height:100px;width:100px">
+        </div>-->
+    <div class="sub-objectx" style="display: none"></div>
+    <div class="sub-objecty" style="display: none"></div>
+    <cs-sub-component class="sub-grid {{comp.hidden?'c-hidden':'c-show'}}" cs-sub-componentselection  ng-repeat="comp in component.components track by comp.id" ng-include="::getComponentPath(comp)" ng-if="comp.parentId == component.id">
+
+
+    </cs-sub-component>
+</div>

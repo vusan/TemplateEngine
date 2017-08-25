@@ -6,12 +6,19 @@
     .service("Cerberus.TemplateEditor.Service.DeviceResolution", function () {
       var availableResolutions = [
         {
-          name: "640px - Apple iPhone 4&5",
-          value: 640
+          name: "Mobile",
+          value: 640,
+          icon: 'mobile'
         },
         {
-          name: "768px - Apple iPad 1&2",
-          value: 768
+          name: "Tablet",
+          value: 768,
+          icon:'tablet'
+        },
+      {
+          name: "Desktop",
+          value: 1025,
+          icon:'desktop'
         }];
 
       this.getResolutions = function () {

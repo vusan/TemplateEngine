@@ -32,7 +32,7 @@
 
             resolutionSlider
               .slider({
-                step: 1,
+                step: 480,
                 value: maxResolutionValue,
                 max: maxResolutionValue,
 

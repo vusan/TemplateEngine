@@ -1,10 +1,10 @@
 ﻿<div class="container" ng-class="{collapsed: !isExpanded }">
     <ul class="component-plugins collapsed">
-        <li class="component-plugin"
+        <li class="component-plugin {{::componentPlugin.droppable}}"
             ng-repeat="componentPlugin in ::componentPlugins"
             data-control-type="{{::componentPlugin.componentType}}"
             data-control-category="{{::componentPlugin.category}}"
-            data-name="{{::componentPlugin.name}}">
+            data-name="{{::componentPlugin.name}}" >
             <img class="plugin-image" ng-src="{{::applicationBasePath}}images/componentPlugins/{{::componentPlugin.imageUrl}}" />
             <span ng-bind="::localization.componentPluginNames[componentPlugin.name]"></span>
         </li>
